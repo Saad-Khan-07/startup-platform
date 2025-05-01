@@ -33,15 +33,13 @@ const Navbar = async () => {
                   </span>
                 </button>
               </form>
-              <Link href={`/user/${session?.id}`}>
-              <Avatar>
-                <AvatarImage src={session?.user?.image || ''} alt={session?.user?.name || ''}/>
-                <AvatarFallback>AV</AvatarFallback>
-                </Avatar>
-                <span>{session?.user?.name}
-                  
-                </span>
-              </Link>
+              <Link href={`/user/${session?.id}`} className="flex items-center gap-2">
+              <Avatar className="w-8 h-8 rounded-full overflow-hidden">
+                <AvatarImage src={session?.user?.image || ''} alt={session?.user?.name || ''} className="w-full h-full object-cover"/>
+                <AvatarFallback className="w-full h-full flex items-center justify-center text-sm">AV</AvatarFallback>
+              </Avatar>
+              <span className="max-sm:hidden">{session?.user?.name}</span>
+            </Link>
             </>
           ) : (
             <form

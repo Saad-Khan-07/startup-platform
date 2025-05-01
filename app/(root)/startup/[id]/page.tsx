@@ -17,7 +17,7 @@ const page = async ({ params }: { params: Promise<{ id?: string }> }) => {
 
   const post = await client.fetch(STARTUP_BY_ID_QUERY, { id });
 
-  console.log( "This is params: \n\n\n",params)
+  console.log("This is params: \n\n\n", params);
 
   if (!post) return notFound();
 
@@ -36,11 +36,13 @@ const page = async ({ params }: { params: Promise<{ id?: string }> }) => {
           alt="thumbnail"
           className="w-full h-auto rounded-xl"
         />
-        <div className="space-y-5 mt-10 max-w-4xl mx-auto">
-          <div className="flex-between gap-5">
+        
+        <div className="max-w-4xl mx-auto mt-10">
+          {/* Author and Category Section */}
+          <div className="flex justify-between items-center mb-8">
             <Link
               href={`/user/${post.author?._id}`}
-              className="flex gap-2 items-center mb-3"
+              className="flex gap-3 items-center"
             >
               <Image
                 src={post.author?.image}
@@ -49,7 +51,7 @@ const page = async ({ params }: { params: Promise<{ id?: string }> }) => {
                 height={64}
                 className="rounded-full drop-shadow-lg"
               />
-              <div className="">
+              <div>
                 <p className="text-20-medium">{post.author?.name}</p>
                 <p className="text-16-medium !text-black-300">
                   @{post.author?.username}
@@ -57,7 +59,11 @@ const page = async ({ params }: { params: Promise<{ id?: string }> }) => {
               </div>
             </Link>
             <p className="category-tag">{post.category}</p>
-            <h3 className="text-30-bold">Pitch Details</h3>
+          </div>
+          
+          {/* Pitch Details Section */}
+          <div className="space-y-5 mt-12">
+            <h3 className="text-30-bold mb-6">Pitch Details</h3>
             {parsedContent ? (
               <article
                 className="prose max-w-4xl font-work-sans break-all"
@@ -68,9 +74,11 @@ const page = async ({ params }: { params: Promise<{ id?: string }> }) => {
             )}
           </div>
         </div>
-        <hr className="divider"/>
-        <Suspense fallback={<Skeleton className="view_skeleton"></Skeleton>}>
-            <View id={id}/>
+        
+        <hr className="divider my-10" />
+        
+        <Suspense fallback={<Skeleton className="view_skeleton" />}>
+          <View id={id} />
         </Suspense>
       </section>
     </>
